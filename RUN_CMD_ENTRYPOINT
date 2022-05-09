@@ -82,6 +82,17 @@ Hello world
 but when container runs with a command, e.g., docker run -it <image> /bin/bash, CMD is ignored and bash interpreter runs instead:
 
 root@7de4bed89922:/#
+-------
+FROM centos:7
+RUN    apt-get update
+RUN     apt-get -y install python
+COPY ./opt/source code
+CMD ["echo", "Hello, Darwin"]
+
+
+
+
+
 ENTRYPOINT
 ENTRYPOINT instruction allows you to configure a container that will run as an executable. It looks similar to CMD, because it also allows you to specify a command with parameters. The difference is ENTRYPOINT command and parameters are not ignored when Docker container runs with command line parameters. (There is a way to ignore ENTTRYPOINT, but it is unlikely that you will do it.)
 
@@ -104,6 +115,16 @@ but when container runs as docker run -it <image> John will result in
 Hello John
 Shell form
 Shell form of ENTRYPOINT ignores any CMD or docker run command line arguments.
+-----------
+FROM centos:7
+RUN    apt-get update
+RUN     apt-get -y install python
+COPY ./opt/source code
+ENTRYPOINT ["echo", "Hello, Darwin"]
+
+
+
+
 
 The bottom line
 Use RUN instructions to build your image by adding layers on top of initial image.
@@ -111,3 +132,13 @@ Use RUN instructions to build your image by adding layers on top of initial imag
 Prefer ENTRYPOINT to CMD when building executable Docker image and you need a command always to be executed. Additionally use CMD if you need to provide extra default arguments that could be overwritten from command line when docker container runs.
 
 Choose CMD if you need to provide a default command and/or arguments that can be overwritten from command line when docker container runs.
+========
+FROM centos:7
+RUN    apt-get update
+RUN     apt-get -y install python
+COPY ./opt/source code
+ENTRYPOINT ["echo", "Hello"]CMD [“Darwin”]
+
+
+
+
